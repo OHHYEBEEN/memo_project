@@ -3,59 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>메모장</title>
+    <style>
+        @font-face {
+            font-family: 'BagelFatOne-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_JAMO@1.0/BagelFatOne-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* 배경을 그라데이션으로 추가 */
+        body {
+            background: linear-gradient(135deg, #f06, #ffba00);
+            font-family: Arial, sans-serif;
+            color: rgb(0, 0, 0);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'BagelFatOne-Regular';
+            font-size: 70px;
+            text-align: center;
+            padding: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid black; /* 검정색 선 추가 */
+        }
+
+        /* 이미지 스타일 */
+        .bottom-image {
+            display: block;
+            margin-top: 10px; /* 제목과 간격 조정 */
+            width: 200px; /* 크기 200px */
+            height: auto; /* 가로 비율 유지 */
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .memo-create {
+            background-color: rgba(255, 255, 255, 0.8);
+            font-size: 40px;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .memo-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .memo {
+            background-color: white;
+            border: 2px solid rgb(0, 0, 0);
+            text-align: center;
+            margin: 20px;
+            padding: 30px;
+            border-radius: 10px;
+            width: 200px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            font-size: 30pt; /* 메모 텍스트 크기 */
+        }
+
+        .memo:hover {
+            transform: scale(1.05);
+        }
+
+        a {
+            text-decoration: none;
+            color: #f06;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #ffba00;
+        }
+    </style>
 </head>
-<style>
-    @font-face {
-    font-family: 'PartialSansKR-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-
-    h1{
-        font-family: 'PartialSansKR-Regular';
-        font-size: 70px;
-    }
-
-    div {
-        background-color: #16af10;
-    }
-
-    a {
-        background-color: #e4ebda;
-        text-decoration-line: none;
-        text-decoration-style: wavy;
-    }
-
-    .memo-create {
-        background-color: rgb(174, 218, 15);
-        text-decoration-line: none;
-        font-size: 40px;
-    }
-
-    .memo-list {
-        background-color: bisque;
-    }
-
-    table {
-        border: 1px;
-        border-color: black;
-    }
-</style>
 <body>
     <h1>메모장</h1>
+
+    <!-- 추가된 이미지 -->
+    <img class="bottom-image" src="https://cdn.dailyvet.co.kr/wp-content/uploads/2024/05/15231647/20240515ceva_experts4.jpg" alt="메모장 이미지">
+
     <div class="memo-create">
-    <a href="{% url 'note_create' %}">메모생성</a><br>
+        <a href="{% url 'note_create' %}">메모생성</a>
     </div>
-    <div class ="memo-list">
-        <table>
-            <td>
-    {% for note in notes %}
-    <a href="http://127.0.0.1:8000/list/{{ note.id }}"> {{note}}</a><br>
-    {% endfor %}
-</td>
-</table>
+
+    <div class="memo-list">
+        {% for note in notes %}
+            <div class="memo">
+                <a class="note-title" href="{% url 'note_detail' note.pk %}"> {{ note }}</a>
+                <a class="note-delete" href="{% url 'note_delete' note.pk %}">X</a>
+            </div>
+        {% endfor %}
     </div>
 </body>
 </html>

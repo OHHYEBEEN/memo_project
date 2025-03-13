@@ -3,11 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>메모 세부 내용</title>
+    <style>
+        @font-face {
+            font-family: 'BagelFatOne-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_JAMO@1.0/BagelFatOne-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f06, #ffba00); /* Same background as the first code */
+            font-family: Arial, sans-serif;
+            color: rgb(0, 0, 0);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'BagelFatOne-Regular';
+            font-size: 80px;
+            text-align: center;
+            padding: 30px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid black;
+            margin-top: 30px;
+        }
+
+        .note-content {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 30px; /* Rounded corners */
+            margin-top: 40px;
+            width: 80%;
+            max-width: 900px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .note-content p {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #f06;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            border-radius: 12px;
+            background-color: #fff;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #ffba00;
+            color: white;
+        }
+
+        .button-link {
+            background-color: #f06;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            text-align: center;
+            display: inline-block;
+            margin-top: 30px;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .button-link:hover {
+            background-color: #ffba00;
+        }
+    </style>
 </head>
 <body>
-    {{note.title}} <br>
-    {{note.context}} <br>
-    {{note.create_at}}
+    <h1>{{ note.title }}</h1>
+
+    <div class="note-content">
+        <p>{{ note.context }}</p>
+        <p><strong>작성일:</strong> {{ note.create_at }}</p>
+        
+        <a href="{% url 'note_edit' note.pk %}">수정</a>
+        
+        <!-- 목록으로 돌아가기 버튼 -->
+        <a href="{% url 'note_list' %}" class="button-link">목록으로 돌아가기</a>
+    </div>
 </body>
 </html>
